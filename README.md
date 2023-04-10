@@ -32,3 +32,9 @@ Create a `.env` file at the root project directory with the following contents (
 ```properties
 PORT=8000
 ```
+
+## Running the Server
+
+```bash
+npx run build && npm start
+```
