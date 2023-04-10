@@ -35,10 +35,11 @@ Create a `.env` file at the root project directory with the following contents (
 PORT=8000
 ```
 
+If using VSCode for development, installing [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) would be helpful.
+
 ## Running the Server
 
 To run the server for development with hot-reload:
-<!-- TODO: doesn't refresh browser, look into that -->
 ```
 npm run dev
 ```
@@ -48,8 +49,7 @@ To run the server in "production":
 npx run build && npm start
 ```
 
-<!-- TODO: is the concurrently / nodemon setup for ts correct? -->
-<!-- TODO: setup eslint (prettier) -->
+<!-- GitHub action for ESLint -->
 <!-- TODO: setup MongoDB -->
 <!-- TODO: setup Heroku -->
 <!-- TODO: auto-deploy to Heroku -->
