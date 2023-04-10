@@ -21,3 +21,14 @@ v18.15.0
 > nvm --version
 0.39.3
 ```
+
+Install all node packages:
+<!-- TODO: install vs ci? -->
+```bash
+npm ci
+```
+
+Create a `.env` file at the root project directory with the following contents (note that it is in the `.gitignore` and will be used to store secrets for development):
+```properties
+PORT=8000
+```
