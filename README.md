@@ -49,7 +49,6 @@ To run the server in "production":
 npx run build && npm start
 ```
 
-<!-- GitHub action for ESLint -->
 <!-- TODO: setup MongoDB -->
 <!-- TODO: setup Heroku -->
 <!-- TODO: auto-deploy to Heroku -->
