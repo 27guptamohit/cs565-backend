@@ -22,6 +22,8 @@ v18.15.0
 0.39.3
 ```
 
+[Following these instructions.](https://blog.logrocket.com/how-to-set-up-node-typescript-express/)
+
 Install all node packages:
 <!-- TODO: install vs ci? -->
 ```bash
@@ -35,6 +37,19 @@ PORT=8000
 
 ## Running the Server
 
+To run the server for development with hot-reload:
+<!-- TODO: doesn't refresh browser, look into that -->
+```
+npm run dev
+```
+
+To run the server in "production":
 ```bash
 npx run build && npm start
 ```
+
+<!-- TODO: is the concurrently / nodemon setup for ts correct? -->
+<!-- TODO: setup eslint (prettier) -->
+<!-- TODO: setup MongoDB -->
+<!-- TODO: setup Heroku -->
+<!-- TODO: auto-deploy to Heroku -->
