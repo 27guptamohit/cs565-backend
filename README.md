@@ -38,6 +38,8 @@ npm ci
 Create a `.env` file at the root project directory with the following contents (note that it is in the `.gitignore` and will be used to store secrets for development):
 ```properties
 PORT=8000
+# ask group for details
+MONGO_CONNECTION=<authlink>
 ```
 
 If using VSCode for development, installing [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) would be helpful.
