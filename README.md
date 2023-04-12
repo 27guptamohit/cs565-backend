@@ -7,6 +7,12 @@ Backend for our CS 565 project (name pending).
 Install nvm, node.js, npm (MacOS/Linux, [original reference](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl)):
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+
+# The below command may be needed so that nvm can be found by your shell
+export NVM_DIR="$HOME/.nvm"
+\. "$NVM_DIR/nvm.sh"
+\. "$NVM_DIR/bash_completion"
+
 nvm install --lts
 ```
 
@@ -25,7 +31,6 @@ v18.15.0
 [Following these instructions.](https://blog.logrocket.com/how-to-set-up-node-typescript-express/)
 
 Install all node packages:
-<!-- TODO: install vs ci? -->
 ```bash
 npm ci
 ```
@@ -40,7 +45,7 @@ If using VSCode for development, installing [ESLint](https://marketplace.visuals
 ## Running the Server
 
 To run the server for development with hot-reload:
-```
+```bash
 npm run dev
 ```
 
