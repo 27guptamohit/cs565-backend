@@ -44,6 +44,8 @@ MONGO_CONNECTION=<authlink>
 
 If using VSCode for development, installing [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) would be helpful.
 
+Testing can be done either through the browser or using the tool [Postman](https://www.postman.com/).
+
 ## Running the Server
 
 To run the server for development with hot-reload:

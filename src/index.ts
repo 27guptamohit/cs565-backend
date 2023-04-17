@@ -1,11 +1,12 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
-import express, { type Express, type Request, type Response } from 'express';
+import express, { type Express, type Request, type Response, Router } from 'express';
 import { connect } from 'mongoose';
+import registerRoutes from './routes';
 
 dotenv.config();
 
-const app: Express = express();
+const server: Express = express();
 const port = process.env.PORT;
 const MONGO_AUTH = process.env.MONGO_AUTH;
 
@@ -24,16 +25,19 @@ connect(MONGO_AUTH).then(
 );
 
 // Enabling CORS to let API be accessed from a different server
-app.use(cors());
+server.use(cors());
 
 // use the json parsing middleware
-app.use(express.json());
+server.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
+server.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server is running');
 });
 
-app.listen(port, () => {
+const router: Router = Router();
+registerRoutes(server, router);
+
+server.listen(port, () => {
   if (port !== undefined) {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
   }
