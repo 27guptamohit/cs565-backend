@@ -4,7 +4,6 @@ interface User {
   email: string
 };
 
-// TODO: convert from list of strings to list of measure objects
 const schema: Schema = new Schema<User>({
   email: { type: String, required: false }
 });
