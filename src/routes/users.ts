@@ -16,7 +16,7 @@ const usersRoute = (router: Router): Router => {
     try {
       const { email } = req.body;
       const existingUser = await UserModel.findOne({ email });
-      if (existingUser != null) {
+      if (existingUser !== null && email !== undefined) {
         return res.status(400).json({ message: 'User already exists!' });
       }
       const result = await UserModel.create({ email });
