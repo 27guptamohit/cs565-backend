@@ -4,7 +4,7 @@ import MeasureModel from '../models/measure';
 const router = Router();
 
 // Create a new Measure
-router.post('/measure', async (req: Request, res: Response) => {
+router.post('/measures', async (req: Request, res: Response) => {
   try {
     const newMeasure = await MeasureModel.create(req.body);
     res.status(201).json({ message: 'Measure created successfully', data: newMeasure });
@@ -14,7 +14,7 @@ router.post('/measure', async (req: Request, res: Response) => {
 });
 
 // Get all Measures
-router.get('/measure', async (req: Request, res: Response) => {
+router.get('/measures', async (req: Request, res: Response) => {
   try {
     const measures = await MeasureModel.find();
     res.status(200).json({ message: 'Measures retrieved successfully', data: measures });
@@ -24,7 +24,7 @@ router.get('/measure', async (req: Request, res: Response) => {
 });
 
 // Update a Measure by ID
-router.put('/measure:id', async (req: Request, res: Response) => {
+router.put('/measures/:id', async (req: Request, res: Response) => {
   try {
     const measureId = req.params.id;
     const updatedMeasure = await MeasureModel.findByIdAndUpdate(measureId, req.body, { new: true });
@@ -35,7 +35,7 @@ router.put('/measure:id', async (req: Request, res: Response) => {
 });
 
 // Delete a Measure by ID
-router.delete('/measure:id', async (req: Request, res: Response) => {
+router.delete('/measures/:id', async (req: Request, res: Response) => {
   try {
     const measureId = req.params.id;
     await MeasureModel.findByIdAndDelete(measureId);
