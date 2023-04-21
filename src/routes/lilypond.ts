@@ -57,6 +57,10 @@ const lilypondRoute = (router: Router): Router => {
   router.get('/lilypond:id', async (req: Request, res: Response) => {
     try {
       const measureList = await MeasureModel.findById(req.params.id).sort({ measureId: 1 });
+      if (measureList === null || measureList === undefined) {
+        res.status(404).json({ message: 'Measure GET failed - no sheet found', data: { _id: req.params.id } });
+        return;
+      }
 
       let sheet = '';
       sheet += header;
@@ -81,7 +85,6 @@ const lilypondRoute = (router: Router): Router => {
         sheet = sheet + measure + '\n';
       });
       sheet += footer;
-      //   }
 
       return res.status(201).json({ message: 'Sheet GET successful', data: sheet });
     } catch (error) {
