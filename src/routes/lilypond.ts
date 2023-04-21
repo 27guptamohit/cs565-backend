@@ -56,29 +56,29 @@ const footer = `
 const lilypondRoute = (router: Router): Router => {
   router.get('/lilypond:id', async (req: Request, res: Response) => {
     try {
-      const measureList = await MeasureModel.findOne({ sheetId: req.params.id }).sort({ measureId: 1 });
+      const measureList = await MeasureModel.findById(req.params.id).sort({ measureId: 1 });
 
       let sheet = '';
       sheet += header;
 
       measureList?.responses.forEach((measureResponse: MeasureResponse) => {
-        let seg = '';
+        let measure = '';
         const symbolList = measureResponse.symbols;
         symbolList.forEach((symbol: Symbols) => {
-          let exp = '';
+          let sym = '';
           const symbolName = symbol.name;
           const symbolPitch = symbol.pitch;
           const type = symbolName.split('_')[1];
 
           if (type === 'note') {
             // pitch + duration
-            exp = pitchMap[symbolPitch] + nameMap[symbolName];
+            sym = pitchMap[symbolPitch] + nameMap[symbolName];
           } else if (type === 'rest') {
-            exp = nameMap[symbolName];
+            sym = nameMap[symbolName];
           }
-          seg = seg + exp + ' ';
+          measure = measure + sym + ' ';
         });
-        sheet = sheet + seg + '\n';
+        sheet = sheet + measure + '\n';
       });
       sheet += footer;
       //   }
