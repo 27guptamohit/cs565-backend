@@ -31,7 +31,7 @@ server.use(cors());
 server.use(express.json({ limit: '10mb' }));
 
 server.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server is running');
+  res.send('Express + TypeScript Server is running. Test auto deploy.');
 });
 
 const router: Router = Router();
