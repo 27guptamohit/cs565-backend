@@ -56,10 +56,8 @@ const footer = `
 const lilypondRoute = (router: Router): Router => {
   router.get('/lilypond:id', async (req: Request, res: Response) => {
     try {
-      const measureList = await MeasureModel.findOne({ sheetId: req.params.id });
-      // TODO: order by measure id
+      const measureList = await MeasureModel.findOne({ sheetId: req.params.id }).sort({ measureId: 1 });
 
-      //   const measureResponseList = await MeasureResponseModel.findOne({ sheetId: req.params.id });
       let sheet = '';
       sheet += header;
 

@@ -7,7 +7,7 @@ export interface Symbols {
 
 export const symbolSchema: Schema = new Schema<Symbols>({
   name: { type: String, required: true },
-  pitch: { type: Number, required: true }
+  pitch: { type: Number }
 });
 
 const SymbolModel = model<Symbols>('Symbol', symbolSchema);

@@ -8,7 +8,7 @@ export interface MeasureResponse {
 
 const SymbolSchema: Schema = new Schema<Symbols>({
   name: { type: String, required: true },
-  pitch: { type: Number, required: true }
+  pitch: { type: Number, required: true } // should pitch be required? or assign a default value to rest
 });
 
 export const MeasureResponseSchema: Schema = new Schema<MeasureResponse>({
