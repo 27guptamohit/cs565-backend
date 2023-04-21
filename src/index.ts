@@ -7,7 +7,7 @@ import registerRoutes from './routes';
 dotenv.config();
 
 const server: Express = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 const MONGO_AUTH = process.env.MONGO_AUTH;
 
 if (MONGO_AUTH === undefined) {
@@ -28,7 +28,7 @@ connect(MONGO_AUTH).then(
 server.use(cors());
 
 // use the json parsing middleware
-server.use(express.json());
+server.use(express.json({ limit: '10mb' }));
 
 server.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server is running');
@@ -37,8 +37,8 @@ server.get('/', (req: Request, res: Response) => {
 const router: Router = Router();
 registerRoutes(server, router);
 
-server.listen(port, () => {
-  if (port !== undefined) {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+server.listen(PORT, () => {
+  if (PORT !== undefined) {
+    console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
   }
 });

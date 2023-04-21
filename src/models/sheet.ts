@@ -1,12 +1,13 @@
 import { model, Schema } from 'mongoose';
 
 interface Sheet {
-  measures: [string]
+  name: string
+  image: Buffer // base64 encoded
 };
 
-// TODO: convert from list of strings to list of measure objects
 const schema: Schema = new Schema<Sheet>({
-  measures: { type: [String], required: [true, 'measures are required'] }
+  name: { type: String, required: [true, 'name is required'] },
+  image: { type: Buffer, required: [true, 'image binary data is required'] }
 });
 
 const SheetModel = model<Sheet>('Sheet', schema);
