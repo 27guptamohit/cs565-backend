@@ -1,8 +1,7 @@
-import { Router, Request, Response } from 'express';
+import { type Router, type Request, type Response } from 'express';
 import MeasureModel from '../models/measure';
 
 const measuresRoute = (router: Router): Router => {
-
   // Create a new Measure
   router.post('/measures', async (req: Request, res: Response) => {
     try {
@@ -24,6 +23,6 @@ const measuresRoute = (router: Router): Router => {
   });
 
   return router;
-}
+};
 
 export default measuresRoute;
