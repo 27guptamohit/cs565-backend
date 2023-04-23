@@ -24,13 +24,13 @@ const lilypondRoute = (router: Router): Router => {
       }
 
       const sheetId = req.params.id;
-      const measureList = await MeasureModel.find({ sheetId }).sort({ measureId: 1 });
-      if (measureList === null || measureList === undefined) {
-        res.status(404).json({ message: 'Measure GET failed - no sheet found', data: { _id: req.params.sheetId } });
+      const foundMeasure = await MeasureModel.find({ sheetId }).sort({ measureId: 1 });
+      if (foundMeasure === null || foundMeasure === undefined) {
+        res.status(404).json({ message: 'Measure GET failed - no sheet found', data: { _id: req.params.id } });
         return;
       }
 
-      res.status(201).json({ message: 'Sheet GET successful', data: measureList });
+      res.status(201).json({ message: 'Sheet GET successful', data: foundMeasure });
     } catch (error) {
       res.status(500).json({ message: 'Sheet GET failed - something went wrong on the server', data: error });
     }
