@@ -1,6 +1,7 @@
 import { type Request, type Response, type Router } from 'express';
-import { type Symbols } from '../models/symbol';
-import { type MeasureResponse } from '../models/response';
+import { isValidObjectId } from 'mongoose';
+// import { type Symbols } from '../models/symbol';
+// import { type MeasureResponse } from '../models/response';
 // import { type Measure } from '../models/measure';
 
 // import SheetModel from '../models/sheet';
@@ -8,87 +9,30 @@ import MeasureModel from '../models/measure';
 // import MeasureResponseModel from '../models/response';
 // import SymbolModel from '../models/symbol';
 
-const nameMap: Record<string, string> = {
-  quater_note: '4',
-  half_note: '2',
-  whole_note: '1',
-  quater_rest: 'r4',
-  half_rest: 'r2',
-  whole_rest: 'r1'
-};
-
-const pitchMap: Record<string, string> = {
-  1: 'e',
-  2: 'f',
-  3: 'g',
-  4: 'a',
-  5: 'b',
-  6: 'c\'',
-  7: 'd\'',
-  8: 'e\'',
-  9: 'f\''
-};
-
-const header = `
-\\include "english.ly"
-
-
-\\paper {
-  paper-height = 4.6\\in
-  paper-width = 8.5\\in
-  indent = #0
-  system-count = #2
-}
-
-\\score {
-  \\fixed c' {
-
-`;
-
-const footer = `
-  }
-}
-`;
-
-// Responses: [user_id, [symbol1, symbol2, symbol3]]
-// Symbols: [name, pitch]
-
 const lilypondRoute = (router: Router): Router => {
   router.get('/lilypond:id', async (req: Request, res: Response) => {
     try {
-      const measureList = await MeasureModel.findById(req.params.id).sort({ measureId: 1 });
-      if (measureList === null || measureList === undefined) {
-        res.status(404).json({ message: 'Measure GET failed - no sheet found', data: { _id: req.params.id } });
+      if (req.params === undefined || req.params === null ||
+            req.params.id === undefined || req.params.id === null) {
+        res.status(400).json({ message: 'Measure GET failed - no object id provided', data: { _id: req.params.id } });
         return;
       }
 
-      let sheet = '';
-      sheet += header;
+      if (!isValidObjectId(req.params.id)) {
+        res.status(400).json({ message: 'Measure GET failed - invalid object id', data: { _id: req.params.id } });
+        return;
+      }
 
-      measureList?.responses.forEach((measureResponse: MeasureResponse) => {
-        let measure = '';
-        const symbolList = measureResponse.symbols;
-        symbolList.forEach((symbol: Symbols) => {
-          let sym = '';
-          const symbolName = symbol.name;
-          const symbolPitch = symbol.pitch;
-          const type = symbolName.split('_')[1];
+      const sheetId = req.params.id;
+      const measureList = await MeasureModel.find({ sheetId }).sort({ measureId: 1 });
+      if (measureList === null || measureList === undefined) {
+        res.status(404).json({ message: 'Measure GET failed - no sheet found', data: { _id: req.params.sheetId } });
+        return;
+      }
 
-          if (type === 'note') {
-            // pitch + duration
-            sym = pitchMap[symbolPitch] + nameMap[symbolName];
-          } else if (type === 'rest') {
-            sym = nameMap[symbolName];
-          }
-          measure = measure + sym + ' ';
-        });
-        sheet = sheet + measure + '\n';
-      });
-      sheet += footer;
-
-      return res.status(201).json({ message: 'Sheet GET successful', data: sheet });
+      res.status(201).json({ message: 'Sheet GET successful', data: measureList });
     } catch (error) {
-      return res.status(500).json({ message: 'Sheet GET failed - something went wrong on the server', data: error });
+      res.status(500).json({ message: 'Sheet GET failed - something went wrong on the server', data: error });
     }
   });
 
