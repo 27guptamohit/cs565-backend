@@ -24,7 +24,7 @@ const lilypondRoute = (router: Router): Router => {
       }
 
       const sheetId = req.params.id;
-      const foundMeasure = await MeasureModel.find({ sheetId }).sort({ measureId: 1 });
+      const foundMeasure = await MeasureModel.find({ sheetId });
       if (foundMeasure === null || foundMeasure === undefined) {
         res.status(404).json({ message: 'Measure GET failed - no sheet found', data: { _id: req.params.id } });
         return;
