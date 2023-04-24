@@ -1,6 +1,7 @@
 import { type Router, type Request, type Response } from 'express';
 import MeasureModel from '../models/measure';
 
+// TODO: eventually better error checking
 const measuresIdRoute = (router: Router): Router => {
   // Get a Measure by ID
   router.get('/measures/:id', async (req: Request, res: Response) => {
