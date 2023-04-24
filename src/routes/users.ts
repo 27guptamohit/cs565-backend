@@ -3,6 +3,7 @@ import { type Request, type Response, type Router } from 'express';
 import UserModel from '../models/user';
 
 const usersRoute = (router: Router): Router => {
+  // Get all users
   router.get('/users', async (req: Request, res: Response) => {
     try {
       const users = await UserModel.find();
@@ -11,7 +12,7 @@ const usersRoute = (router: Router): Router => {
       return res.status(500).json({ message: 'User GET failed - something went wrong on the server', data: error });
     }
   });
-
+  // Create a user
   router.post('/users', async (req: Request, res: Response): Promise<Response> => {
     try {
       const { email } = req.body;
@@ -27,5 +28,4 @@ const usersRoute = (router: Router): Router => {
   });
   return router;
 };
-
 export default usersRoute;
