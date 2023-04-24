@@ -1,7 +1,7 @@
 [
     {
         "sheetId": 1,
-        "measureId": 1,
+        "measureNum": 1,
         "responses": [
             {
                 "userId": 1,
@@ -58,7 +58,7 @@
     },
     {
         "sheetId": 1,
-        "measureId": 2,
+        "measureNum": 2,
         "responses": [
             {
                 "userId": 1,

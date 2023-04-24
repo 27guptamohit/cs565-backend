@@ -1,21 +1,12 @@
-import { model, Schema } from 'mongoose';
-import { type Symbols } from './symbol';
+import { Schema } from 'mongoose';
+import { type Symbols, symbolSchema } from './symbol';
 
 export interface MeasureResponse {
   userId: number
   symbols: Symbols[]
 };
 
-const SymbolSchema: Schema = new Schema<Symbols>({
-  name: { type: String, required: true },
-  pitch: { type: Number, required: true } // should pitch be required? or assign a default value to rest
-});
-
 export const MeasureResponseSchema: Schema = new Schema<MeasureResponse>({
   userId: { type: Number, required: true },
-  symbols: { type: [SymbolSchema], default: [] }
+  symbols: { type: [symbolSchema], default: [] }
 });
-
-const MeasureResponseModel = model<MeasureResponse>('MeasureResponse', MeasureResponseSchema);
-
-export default MeasureResponseModel;

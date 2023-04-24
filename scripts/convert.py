@@ -54,17 +54,17 @@ if __name__ == '__main__':
     # Load the JSON data
         data = json.load(f)
         # measure = {key: data[key] for key in sorted_keys}
-        # Sort the JSON data by 'measureId' in ascending order
-        sorted_data = sorted(data, key=lambda x: x['measureId'])
+        # Sort the JSON data by 'measureNum' in ascending order
+        sorted_data = sorted(data, key=lambda x: x['measureNum'])
 
         # Create a dictionary to store the sorted data
         sorted_dict = {}
 
         # Iterate through the sorted data and populate the dictionary
         for item in sorted_data:
-            measure_id = item['measureId']
+            measure_num = item['measureNum']
             responses = item['responses']
-            sorted_dict[measure_id] = responses
+            sorted_dict[measure_num] = responses
 
         # print(sorted_dict)
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         most_common_dict = {}
 
         # Iterate through the sorted_dict
-        for measure_id, responses in sorted_dict.items():
+        for measure_num, responses in sorted_dict.items():
             # Concatenate name and pitch for each response
             symbol_strings = []
             for response in responses:
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                     visted_symbols.append(symbol_string)
             
             # Add the most common symbols to the most_common_dict
-            most_common_dict[measure_id] = most_common_symbols
+            most_common_dict[measure_num] = most_common_symbols
             # print(most_common_symbols)
 
         print(most_common_dict)
@@ -106,8 +106,8 @@ if __name__ == '__main__':
         sheet = header
 
         # Iterate through the most_common_dict
-        for measure_id, symbols in most_common_dict.items():
-            print("Measure ID:", measure_id)
+        for measure_num, symbols in most_common_dict.items():
+            print("Measure ID:", measure_num)
             # Iterate through the symbols list for each measure ID
             seg = "    "
             for symbol in symbols:
@@ -140,7 +140,7 @@ if __name__ == '__main__':
         # most_common_dict = {}
 
         # # Iterate through the sorted_dict
-        # for measure_id, responses in sorted_dict.items():
+        # for measure_num, responses in sorted_dict.items():
         #     # Concatenate name and pitch for each response
         #     symbol_strings = []
         #     for response in responses:
@@ -164,7 +164,7 @@ if __name__ == '__main__':
         #             most_common_response['symbols'] = symbols
             
         #     # Add the most common response to the most_common_dict
-        #     most_common_dict[measure_id] = most_common_response
+        #     most_common_dict[measure_num] = most_common_response
 
         # print(most_common_dict)
 
@@ -172,11 +172,11 @@ if __name__ == '__main__':
 
 
 
-        # # Create a dictionary to store the most common response for each measureId
+        # # Create a dictionary to store the most common response for each measureNum
         # most_common_responses = {}
 
         # # Iterate through the sorted_dict
-        # for measure_id, responses in sorted_dict.items():
+        # for measure_num, responses in sorted_dict.items():
         #     # Create a Counter object to count the occurrences of each response
         #     counter = collections.Counter()
         #     for response in responses:
@@ -187,14 +187,14 @@ if __name__ == '__main__':
         #     most_common_response = counter.most_common(1)[0][0]
             
         #     # Add the most common response to the dictionary
-        #     most_common_responses[measure_id] = {
+        #     most_common_responses[measure_num] = {
         #         'symbols': most_common_response,
         #         'count': counter[most_common_response]
         #     }
 
-        # # Print the most common responses for each measureId
-        # for measure_id, response in most_common_responses.items():
-        #     print(f"Measure ID: {measure_id}")
+        # # Print the most common responses for each measureNum
+        # for measure_num, response in most_common_responses.items():
+        #     print(f"Measure ID: {measure_num}")
         #     print(f"Most Common Symbols: {response['symbols']}")
         #     print(f"Count: {response['count']}")
         
