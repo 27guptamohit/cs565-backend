@@ -6,7 +6,7 @@ name_map = {
     "quarter_note": "4",
     "half_note": "2",
     "whole_note": "1",
-    "quater_rest": "r4",
+    "quarter_rest": "r4",
     "half_rest": "r2",
     "whole_rest": "r1"
 }
@@ -48,7 +48,9 @@ footer = """
 
 if __name__ == '__main__':
     # file_name = sys.argv[1]
-    file_name = 'scripts/sample.json'
+    # file_name = 'scripts/sample.json'
+    file_name = 'scripts/test.json'
+
 
     with open(file_name, 'r') as f:
     # Load the JSON data
@@ -112,13 +114,12 @@ if __name__ == '__main__':
             seg = "    "
             for symbol in symbols:
                 symbol_name = symbol['name']
-                symbol_pitch = symbol['pitch']
                 print("Symbol Name:", symbol['name'])
                 print("Symbol Pitch:", symbol.get('pitch', None))
 
                 exp = ""
                 if (symbol_name.split('_')[1] == "note"):
-                    exp = pitch_map[symbol_pitch] + name_map[symbol_name]
+                    exp = pitch_map[symbol['pitch']] + name_map[symbol_name]
                 else:
                     exp = name_map[symbol_name]
                 
