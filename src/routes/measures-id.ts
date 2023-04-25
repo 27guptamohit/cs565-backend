@@ -1,4 +1,6 @@
 import { type Router, type Request, type Response } from 'express';
+
+import queryParams from './common/query-params';
 import MeasureModel from '../models/measure';
 
 // TODO: eventually better error checking
@@ -7,7 +9,7 @@ const measuresIdRoute = (router: Router): Router => {
   router.get('/measures/:id', async (req: Request, res: Response) => {
     try {
       const measureId = req.params.id;
-      const measure = await MeasureModel.findById(measureId);
+      const measure = await queryParams(MeasureModel.findById(measureId), req.query);
       res.status(200).json({ message: 'Measure retrieved successfully', data: measure });
     } catch (error) {
       res.status(500).json({ message: 'Error retrieving Measure', data: error });

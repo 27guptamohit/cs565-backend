@@ -1,6 +1,7 @@
 import { type Request, type Response, type Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 
+import queryParams from './common/query-params';
 import UserModel from '../models/user';
 
 const usersIdRoutes = (router: Router): Router => {
@@ -16,7 +17,7 @@ const usersIdRoutes = (router: Router): Router => {
         return res.status(400).json({ message: 'User GET failed - invalid object id', data: { _id: req.params.id } });
       }
 
-      const user = await UserModel.findById(req.params.id);
+      const user = await queryParams(UserModel.findById(req.params.id), req.query);
       if (user != null) {
         return res.status(200).json({ message: 'User GET successful', data: user });
       } else {

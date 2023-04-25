@@ -1,4 +1,6 @@
 import { type Request, type Response, type Router } from 'express';
+
+import queryParams from './common/query-params';
 import MeasureModel from '../models/measure';
 
 const lilypondRoute = (router: Router): Router => {
@@ -11,7 +13,7 @@ const lilypondRoute = (router: Router): Router => {
       }
 
       const sheetId = req.params.id;
-      const foundMeasure = await MeasureModel.find({ sheetId });
+      const foundMeasure = await queryParams(MeasureModel.find({ sheetId }), req.query);
       if (foundMeasure === null || foundMeasure === undefined) {
         res.status(404).json({ message: 'Lily-Measure GET failed - no sheet found', data: { _id: req.params.id } });
         return;

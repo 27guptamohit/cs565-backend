@@ -1,6 +1,7 @@
 import { type Request, type Response, type Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 
+import queryParams from './common/query-params';
 import SheetModel from '../models/sheet';
 
 const sheetsIdRoute = (router: Router): Router => {
@@ -17,7 +18,7 @@ const sheetsIdRoute = (router: Router): Router => {
         return;
       }
 
-      const foundSheet = await SheetModel.findById(req.params.id);
+      const foundSheet = await queryParams(SheetModel.findById(req.params.id), req.query);
       if (foundSheet === null || foundSheet === undefined) {
         res.status(404).json({ message: 'Sheet GET failed - no sheet found', data: { _id: req.params.id } });
         return;
