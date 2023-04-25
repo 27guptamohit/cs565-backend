@@ -1,0 +1,116 @@
+[
+    {
+        "sheetId": 1,
+        "measureNum": 1,
+        "responses": [
+            {
+                "userId": 1,
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "half_rest",
+                        "pitch": 0
+                    },
+                    {
+                        "name": "quarter_note",
+                        "pitch": 3
+                    }
+                ]
+            },
+            {
+                "userId": 2,
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "half_rest",
+                        "pitch": 0
+                    },
+                    {
+                        "name": "quarter_note",
+                        "pitch": 3
+                    }
+                ]
+            },
+            {
+                "userId": 3,
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "half_rest",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "quarter_note",
+                        "pitch": 3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "sheetId": 1,
+        "measureNum": 2,
+        "responses": [
+            {
+                "userId": 1,
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "half_rest",
+                        "pitch": 0
+                    },
+                    {
+                        "name": "quarter_note",
+                        "pitch": 3
+                    }
+                ]
+            },
+            {
+                "userId": 2,
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "half_rest",
+                        "pitch": 0
+                    },
+                    {
+                        "name": "quarter_note",
+                        "pitch": 3
+                    }
+                ]
+            },
+            {
+                "userId": 3,
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "half_rest",
+                        "pitch": 1
+                    },
+                    {
+                        "name": "quarter_note",
+                        "pitch": 3
+                    }
+                ]
+            }
+        ]
+    }
+]
