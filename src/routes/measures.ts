@@ -7,6 +7,10 @@ const measuresRoute = (router: Router): Router => {
   // Create a new Measure
   router.post('/measures', async (req: Request, res: Response) => {
     try {
+      if ('responseCount' in req.body) {
+        req.body.responseCount = req.body.responses.length;
+      }
+
       const newMeasure = await MeasureModel.create(req.body);
       res.status(201).json({ message: 'Measure created successfully', data: newMeasure });
     } catch (error) {
