@@ -2,6 +2,83 @@
 
 Backend for our CS 565 project (name pending).
 
+## Contents
+
+- [API Documentation](#api-documentation)
+- [Development Environment Setup](#development-environment-setup)
+
+## API Documentation
+
+### Models
+
+User:
+| Field | Type | Required | Unique | Default | Notes |
+|-------|------|----------|--------|---------|-------|
+| email | string | ✘ | ✓ | - | for raffle giveaway purposes |
+
+Sheet:
+| Field | Type | Required | Unique | Default | Notes |
+|-------|------|----------|--------|---------|-------|
+| name | string | ✓ | ✓ | - | title of sheet music |
+| image | Buffer | ✓ | ✓ | - | base64 encoded image of sheet, only support single image |
+
+Measure:
+| Field | Type | Required | Unique | Default | Notes |
+|-------|------|----------|--------|---------|-------|
+| sheetId | ObjectId | ✓ | ✘ | - | document ID for corresponding sheet |
+| measureNum | number | ✓ | ✘ | - | number of measure within sheet for ordering |
+| image | Buffer | ✓ | ✓ | - | base64 encoded image of measure, only support single image |
+| responses | [MeasureResponse] | ✘ | ✘ | [] | stores crowdworker digitizations of measure |
+| responseCount | number | ✘ | ✘ | 0 | stores the number of responses (easier queries via sorting) |
+
+MeasureResponse:
+| Field | Type | Required | Unique | Default | Notes |
+|-------|------|----------|--------|---------|-------|
+| userId | ObjectId | ✓ | ✘ | - | document ID for corresponding user who submitted response |
+| symbols | [Symbols] | ✘ | ✘ | [] | symbols in response |
+
+Symbols:
+| Field | Type | Required | Unique | Default | Notes |
+|-------|------|----------|--------|---------|-------|
+| name | string | ✓ | ✘ | - | name of symbol, one of {quarter_note, half_note, whole_note, quarter_rest, half_rest, whole_rest} |
+| pitch | number | ✘ | ✘ | - | location of note object, where 1 is the bottom line, 2 is the bottom space, 3 is the second to bottom line, etc. |
+
+### Endpoints
+
+These are the following endpoints available:
+
+| Endpoints  | Actions | Intended Outcome                                        |
+|------------|---------|---------------------------------------------------------|
+| users      | GET     | Respond with a list of users                            |
+|            | POST    | Create a new user. Respond with details of new user     |
+| users/:id  | GET     | Respond with details of specified user or 404 error     |
+|            | PUT     | Replace entire user with supplied user or 404 error     |
+|            | DELETE  | Delete specified user or 404 error                      |
+| sheets     | GET     | Respond with a list of sheets                           |
+|            | POST    | Create a new sheet. Respond with details of new sheet   |
+| sheets/:id | GET     | Respond with details of specified sheet or 404 error    |
+|            | PUT     | Replace entire sheet with supplied sheet or 404 error   |
+|            | DELETE  | Delete specified sheet or 404 error                     |
+| measures   | GET     | Respond with a list of measures                         |
+|            | POST    | Create a new measures. Respond with details of new measures |
+| measures/:id | GET   | Respond with details of specified measures or 404 error |
+|            | PUT     | Replace entire measures with supplied measures or 404 error |
+|            | DELETE  | Delete specified measures or 404 error                  |
+| lilypond/:id | GET   | WIP                                                     |
+
+### Query Parameters
+
+Additionally, the API has the following JSON encoded query string parameters for GET requests on all endpoints.
+
+| Parameter | Description                                                                                  |
+|----------|----------------------------------------------------------------------------------------------|
+| where    | filter results based on JSON query                                                           |
+| sort     | specify the order in which to sort each specified field  (1- ascending; -1 - descending)     |
+| select   | specify the set of fields to include or exclude in each document  (1 - include; 0 - exclude) |
+| skip     | specify the number of results to skip in the result set; useful for pagination               |
+| limit    | specify the number of results to return (default should be 100 for tasks and unlimited for users)                    |
+| count    | if set to true, return the count of documents that match the query (instead of the documents themselves)                    |
+
 ## Development Environment Setup
 
 Install nvm, node.js, npm (MacOS/Linux, [original reference](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl)):
@@ -40,11 +117,25 @@ Create a `.env` file at the root project directory with the following contents (
 PORT=8000
 # ask group for details
 MONGO_CONNECTION=<authlink>
+# Used for Python scripts, can configure to live or local server
+ENDPOINT=<endpoint>
 ```
 
 If using VSCode for development, installing [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) would be helpful.
 
 Testing can be done either through the browser or using the tool [Postman](https://www.postman.com/).
+
+To run the Python scripts, install [Python3](https://www.python.org/downloads/).
+
+Optionally set up a virtual environment:
+```bash
+python3 -m venv backend-venv
+```
+
+Then install required dependencies:
+```bash
+python3 -m pip install -r python3_requirements.txt
+```
 
 ## Running the Server
 
