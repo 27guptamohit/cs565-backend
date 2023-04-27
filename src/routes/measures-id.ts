@@ -35,8 +35,8 @@ const measuresIdRoute = (router: Router): Router => {
   router.delete('/measures/:id', async (req: Request, res: Response) => {
     try {
       const measureId = req.params.id;
-      await MeasureModel.findByIdAndDelete(measureId);
-      res.status(200).json({ message: 'Measure deleted successfully' });
+      const removedMeasure = await MeasureModel.findByIdAndDelete(measureId);
+      res.status(200).json({ message: 'Measure deleted successfully', data: removedMeasure });
     } catch (error) {
       res.status(500).json({ message: 'Error deleting Measure', data: error });
     }

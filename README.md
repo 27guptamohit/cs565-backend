@@ -117,11 +117,25 @@ Create a `.env` file at the root project directory with the following contents (
 PORT=8000
 # ask group for details
 MONGO_CONNECTION=<authlink>
+# Used for Python scripts, can configure to live or local server
+ENDPOINT=<endpoint>
 ```
 
 If using VSCode for development, installing [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) would be helpful.
 
 Testing can be done either through the browser or using the tool [Postman](https://www.postman.com/).
+
+To run the Python scripts, install [Python3](https://www.python.org/downloads/).
+
+Optionally set up a virtual environment:
+```bash
+python3 -m venv backend-venv
+```
+
+Then install required dependencies:
+```bash
+python3 -m pip install -r python3_requirements.txt
+```
 
 ## Running the Server
 

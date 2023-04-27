@@ -6,7 +6,7 @@ import SheetModel from '../models/sheet';
 const sheetsRoute = (router: Router): Router => {
   router.get('/sheets', async (req: Request, res: Response) => {
     try {
-      const sheets = await queryParams(SheetModel.find(), queryParams);
+      const sheets = await queryParams(SheetModel.find(), req.query);
       return res.status(200).json({ message: 'Sheets GET successful', data: sheets });
     } catch (error) {
       return res.status(500).json({ message: 'Sheets GET failed - something went wrong on the server', data: error });
