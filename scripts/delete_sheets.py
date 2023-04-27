@@ -12,6 +12,6 @@ for obj in response.json()["data"]:
     data = response.json()["data"]
 
     if (response.status_code == 200):
-        print(f"Successfully deleted sheet _id={data['_id']} / '{data['name']}'")
+        print(f"Successfully deleted sheet _id={data['_id']} / name='{data['name']}'")
     else:
         print(f"Failed to delete sheet _id={data['_id']} - status code {response.status_code}")

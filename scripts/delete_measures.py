@@ -14,4 +14,4 @@ for obj in response.json()["data"]:
     if (response.status_code == 200):
         print(f"Successfully deleted measure _id={data['_id']} / sheetId='{data['sheetId']}' / measureNum={data['measureNum']}")
     else:
-        print(f"Failed to delete measure _id={data['_id']} / '{data['name']}' - status code {response.status_code}")
+        print(f"Failed to delete measure _id={data['_id']} - status code {response.status_code}")
