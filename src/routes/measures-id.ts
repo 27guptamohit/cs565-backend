@@ -19,10 +19,6 @@ const measuresIdRoute = (router: Router): Router => {
   // Update a Measure by ID
   router.put('/measures/:id', async (req: Request, res: Response) => {
     try {
-      if ('responseCount' in req.body) {
-        req.body.responseCount = req.body.responses.length;
-      }
-
       const measureId = req.params.id;
       const updatedMeasure = await MeasureModel.findByIdAndUpdate(measureId, req.body, { new: true });
       res.status(200).json({ message: 'Measure updated successfully', data: updatedMeasure });

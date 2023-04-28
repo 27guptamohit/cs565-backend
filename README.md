@@ -29,7 +29,6 @@ Measure:
 | measureNum | number | ✓ | ✘ | - | number of measure within sheet for ordering |
 | image | Buffer | ✓ | ✓ | - | base64 encoded image of measure, only support single image |
 | responses | [MeasureResponse] | ✘ | ✘ | [] | stores crowdworker digitizations of measure |
-| responseCount | number | ✘ | ✘ | 0 | stores the number of responses (easier queries via sorting) |
 
 MeasureResponse:
 | Field | Type | Required | Unique | Default | Notes |
