@@ -1,11 +1,13 @@
 # cs565-backend (under construction)
 
-Backend for our CS 565 project (name pending).
+Backend for our crowdsourced optical music recognition project (name pending).
 
 ## Contents
 
 - [API Documentation](#api-documentation)
+- [API Usage for Frontend](#api-usage-for-frontend)
 - [Development Environment Setup](#development-environment-setup)
+- [Running the Server](#running-the-server)
 
 ## API Documentation
 
@@ -64,6 +66,8 @@ These are the following endpoints available:
 |            | PUT     | Replace entire measures with supplied measures or 404 error |
 |            | DELETE  | Delete specified measures or 404 error                  |
 | lilypond/:id | GET   | WIP                                                     |
+| measuretask | GET    | Get the next measure to be digitized                    |
+| measureresponse | POST | Add a digitization for the given measure              |
 
 ### Query Parameters
 
@@ -77,6 +81,110 @@ Additionally, the API has the following JSON encoded query string parameters for
 | skip     | specify the number of results to skip in the result set; useful for pagination               |
 | limit    | specify the number of results to return (default should be 100 for tasks and unlimited for users)                    |
 | count    | if set to true, return the count of documents that match the query (instead of the documents themselves)                    |
+
+## API Usage for Frontend
+Below gives examples of (some of) the endpoints that will be used in the frontend.
+
+### Adding a new user
+`POST` request to `<endpoint>/api/users` with the following JSON body:
+```json
+{
+    // note that email is an optional field, in which case you could just send an empty body
+    // emails are required to be unique
+    "email": "thisisatestemail1@test.com"
+}
+```
+
+This returns something like the following:
+```json
+{
+    "message": "User successfully created",
+    "result": {
+        "email": "thisisatestemail1@test.com",
+        "_id": "644b77f8db4b011282fccd45",
+        "__v": 0
+    }
+}
+```
+
+### Retrieving a task
+`GET` request to `<endpoint>/api/measuretask`, no JSON body needed.
+
+This returns something like the following:
+```json
+{
+    "message": "Measure task GET successful!",
+    "data": {
+        "_id": "644b75053f4ea5e40af28956",
+        "image": {
+            "type": "Buffer",
+            // base64 encoded image of the measure
+            "data": [105, 86, ...]
+        }
+    }
+}
+```
+
+### Submitting a task response
+`POST` request to `<endpoint>/api/measureresponse` with the following JSON body:
+```json
+{
+    // Object ID of the measure, from the previous endpoint
+    "measureId": "644b75053f4ea5e40af28956",
+    "measureResponse": {
+        // Object ID of the current user
+        "userId": "6441711a168095d6fe7d479f",
+        // Array of symbols according to our Symbol objects.
+        "symbols": [
+            {
+                "name": "quarter_note",
+                "pitch": 9
+            },
+            {
+                "name": "half_note",
+                "pitch": 3
+            },
+            {
+                "name": "quarter_rest"
+            }
+        ]
+    }
+}
+```
+
+This returns something like the following:
+```json
+{
+    "message": "MeasureResponse POST successful!",
+    "data": {
+        "_id": "644b75053f4ea5e40af28956",
+        "sheetId": "644b75043f4ea5e40af28954",
+        "measureNum": 1,
+        "responses": [
+            {
+                "userId": "6441711a168095d6fe7d479f",
+                "symbols": [
+                    {
+                        "name": "quarter_note",
+                        "pitch": 9,
+                        "_id": "644b790fdb4b011282fccd48"
+                    },
+                    {
+                        "name": "half_note",
+                        "pitch": 3,
+                        "_id": "644b790fdb4b011282fccd49"
+                    },
+                    {
+                        "name": "quarter_rest",
+                        "_id": "644b790fdb4b011282fccd4a"
+                    }
+                ],
+                "_id": "644b790fdb4b011282fccd47"
+            }
+        ]
+    }
+}
+```
 
 ## Development Environment Setup
 
@@ -148,6 +256,4 @@ To run the server in "production":
 npx run build && npm start
 ```
 
-<!-- TODO: setup MongoDB -->
-<!-- TODO: setup Heroku -->
-<!-- TODO: auto-deploy to Heroku -->
+The repository is configured in such a way that any updates to the `main` branch will automatically be linted and then deployed to Heroku via CI.
