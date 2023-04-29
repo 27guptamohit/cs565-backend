@@ -16,7 +16,8 @@ Backend for our crowdsourced optical music recognition project (name pending).
 User:
 | Field | Type | Required | Unique | Default | Notes |
 |-------|------|----------|--------|---------|-------|
-| email | string | ✘ | ✓ | - | for raffle giveaway purposes |
+| email | string | ✘ | ✘ | - | for raffle giveaway purposes |
+| experience | string | ✓ | ✘ | - | user's experience reading sheet music |
 
 Sheet:
 | Field | Type | Required | Unique | Default | Notes |
