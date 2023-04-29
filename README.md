@@ -93,7 +93,8 @@ Below gives examples of (some of) the endpoints that will be used in the fronten
 {
     // note that email is an optional field, in which case you could just send an empty body
     // emails are required to be unique
-    "email": "thisisatestemail1@test.com"
+    "email": "thisisatestemail1@test.com",
+    "experience": "lots"
 }
 ```
 
@@ -103,6 +104,7 @@ This returns something like the following:
     "message": "User successfully created",
     "result": {
         "email": "thisisatestemail1@test.com",
+        "experience": "lots",
         "_id": "644b77f8db4b011282fccd45",
         "__v": 0
     }
