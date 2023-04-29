@@ -14,14 +14,14 @@ const usersRoute = (router: Router): Router => {
     }
   });
   // Create a user
-  router.post('/users', async (req: Request, res: Response): Promise<Response> => {
+  router.post('/users', async (req: Request, res: Response) => {
     try {
-      const { email } = req.body;
-      const existingUser = await UserModel.findOne({ email });
-      if (existingUser !== null && email !== undefined) {
-        return res.status(400).json({ message: 'User already exists!' });
+      if (!('experience' in req.body)) {
+        res.status(400).json({ message: 'User POST failed - validation error', data: 'experience is required' });
+        return;
       }
-      const result = await UserModel.create({ email });
+
+      const result = await UserModel.create(req.body);
       return res.status(201).json({ message: 'User successfully created', result });
     } catch (error) {
       return res.status(500).json({ message: 'User signup 500 error' });

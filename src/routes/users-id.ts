@@ -56,31 +56,26 @@ const usersIdRoutes = (router: Router): Router => {
     try {
       if (req.params === undefined || req.params === null ||
           req.params.id === undefined || req.params.id === null) {
-        return res.status(400).json({ message: 'User email update failed - no object id provided', data: { _id: req.params.id } });
+        return res.status(400).json({ message: 'User PUT failed - no object id provided', data: { _id: req.params.id } });
       }
 
       if (!isValidObjectId(req.params.id)) {
-        return res.status(400).json({ message: 'User email update failed - invalid object id', data: { _id: req.params.id } });
+        return res.status(400).json({ message: 'User PUT failed - invalid object id', data: { _id: req.params.id } });
       }
 
-      const { email } = req.body;
-      if (email === undefined) {
-        return res.status(400).json({ message: 'Email is required' });
+      if (!('experience' in req.body)) {
+        res.status(400).json({ message: 'User PUT failed - validation error', data: 'experience is required' });
+        return;
       }
 
-      const existingUser = await UserModel.findOne({ email });
-      if (existingUser != null) {
-        return res.status(400).json({ message: 'Email is already in use' });
-      }
-
-      const updatedUser = await UserModel.findByIdAndUpdate(req.params.id, { email }, { new: true });
+      const updatedUser = await UserModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
       if (updatedUser != null) {
-        return res.status(200).json({ message: 'User email update successful', data: updatedUser });
+        return res.status(200).json({ message: 'User PUT successful!', data: updatedUser });
       } else {
-        return res.status(404).json({ message: 'User email update failed - no user found', data: { _id: req.params.id } });
+        return res.status(404).json({ message: 'User PUT failed - no user found', data: { _id: req.params.id } });
       }
     } catch (error) {
-      return res.status(500).json({ message: 'User email update failed - something went wrong on the server', data: error });
+      return res.status(500).json({ message: 'User PUT failed - something went wrong on the server', data: error });
     }
   });
   return router;

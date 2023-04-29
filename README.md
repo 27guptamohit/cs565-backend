@@ -16,7 +16,8 @@ Backend for our crowdsourced optical music recognition project (name pending).
 User:
 | Field | Type | Required | Unique | Default | Notes |
 |-------|------|----------|--------|---------|-------|
-| email | string | ✘ | ✓ | - | for raffle giveaway purposes |
+| email | string | ✘ | ✘ | - | for raffle giveaway purposes |
+| experience | string | ✓ | ✘ | - | user's experience reading sheet music |
 
 Sheet:
 | Field | Type | Required | Unique | Default | Notes |
@@ -31,6 +32,7 @@ Measure:
 | measureNum | number | ✓ | ✘ | - | number of measure within sheet for ordering |
 | image | Buffer | ✓ | ✓ | - | base64 encoded image of measure, only support single image |
 | responses | [MeasureResponse] | ✘ | ✘ | [] | stores crowdworker digitizations of measure |
+| goldSymbols | [Symbols] | ✘ | ✘ | [] | correct symbols for this measure, for accuracy calculations | 
 
 MeasureResponse:
 | Field | Type | Required | Unique | Default | Notes |
@@ -91,7 +93,8 @@ Below gives examples of (some of) the endpoints that will be used in the fronten
 {
     // note that email is an optional field, in which case you could just send an empty body
     // emails are required to be unique
-    "email": "thisisatestemail1@test.com"
+    "email": "thisisatestemail1@test.com",
+    "experience": "lots"
 }
 ```
 
@@ -101,6 +104,7 @@ This returns something like the following:
     "message": "User successfully created",
     "result": {
         "email": "thisisatestemail1@test.com",
+        "experience": "lots",
         "_id": "644b77f8db4b011282fccd45",
         "__v": 0
     }

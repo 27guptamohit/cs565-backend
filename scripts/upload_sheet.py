@@ -1,6 +1,7 @@
 import argparse
 import base64
 from dotenv import dotenv_values
+import json
 import os
 import requests
 
@@ -27,6 +28,9 @@ else:
 
 sheet_id = data["_id"]
 
+with open(f"{args.sheet_folder_path}/correct_symbols.json", "r") as json_file:
+    correct_symbols = json.load(json_file)["correctSymbols"]
+
 for filename in sorted(os.listdir(f"{args.sheet_folder_path}/measures")):
     # TODO: this is hacky, make more robust
     measure_num = int(filename[7:9])
@@ -37,7 +41,9 @@ for filename in sorted(os.listdir(f"{args.sheet_folder_path}/measures")):
     payload = {
         "sheetId": sheet_id,
         "measureNum": measure_num,
-        "image": encoded_image
+        "image": encoded_image,
+        # measure numbers are 1-indexed
+        "goldSymbols": correct_symbols[measure_num - 1]
     }
 
     response = requests.post(f"{ENDPOINT}/api/measures", json=payload)
