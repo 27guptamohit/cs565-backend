@@ -13,30 +13,20 @@ const measureTaskRoute = (router: Router): Router => {
 
       // sort from least number of responses to most
       const sortedMeasures = measures.sort((measure1, measure2) => {
-        // focus on least responses
-        if (measure1.responses.length < measure2.responses.length) {
-          return -1;
-        } else if (measure1.responses.length > measure2.responses.length) {
-          return 1;
-        }
-
-        // tiebreak by sheetId
-        if (measure1.sheetId < measure2.sheetId) {
-          return -1;
-        } else if (measure1.sheetId > measure2.sheetId) {
-          return 1;
-        }
-
-        // tiebreak by measureNum
-        if (measure1.measureNum <= measure2.measureNum) {
-          return -1;
-        }
-
-        return 1;
+        return measure1.responses.length <= measure2.responses.length ? -1 : 1;
       });
 
-      // retrieve the measure with the least responses
-      const taskMeasure = await MeasureModel.findById(sortedMeasures[0]._id).select('_id image');
+      const measuresLeastResponses = [];
+      const minResponses: number = sortedMeasures[0].responses.length;
+      for (let i: number = 0; i < sortedMeasures.length; ++i) {
+        if (sortedMeasures[i].responses.length === minResponses) {
+          measuresLeastResponses.push(sortedMeasures[i]);
+        }
+      }
+
+      // retrieve random measure with least responses
+      const selectedMeasure = measuresLeastResponses[Math.floor(Math.random() * measuresLeastResponses.length)];
+      const taskMeasure = await MeasureModel.findById(selectedMeasure).select('_id image');
 
       res.status(200).json({ message: 'Measure task GET successful!', data: taskMeasure });
     } catch (error) {
