@@ -31,6 +31,7 @@ Measure:
 | measureNum | number | ✓ | ✘ | - | number of measure within sheet for ordering |
 | image | Buffer | ✓ | ✓ | - | base64 encoded image of measure, only support single image |
 | responses | [MeasureResponse] | ✘ | ✘ | [] | stores crowdworker digitizations of measure |
+| goldSymbols | [Symbols] | ✘ | ✘ | [] | correct symbols for this measure, for accuracy calculations | 
 
 MeasureResponse:
 | Field | Type | Required | Unique | Default | Notes |
