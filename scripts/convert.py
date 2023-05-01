@@ -1,6 +1,13 @@
 import json
 import sys
 import collections
+import argparse
+import base64
+import json
+import os
+import requests
+from dotenv import dotenv_values
+
 
 name_map = {
     "quarter_note": "4",
@@ -46,90 +53,100 @@ footer = """
 """
 
 
+
+
+
 if __name__ == '__main__':
-    # file_name = sys.argv[1]
-    # file_name = 'scripts/sample.json'
-    file_name = 'scripts/test.json'
+    config = dotenv_values("../.env")
+    ENDPOINT = config["ENDPOINT"]
+    print(ENDPOINT)
+    sheetId = "644dc2b8bd25e12d39e0424f"
+    response = requests.get(f"{ENDPOINT}/api/measures", params={"where": {'\"sheetId\"': sheetId}, "select": b"{\"_id\": 1, \"sheetId\": 1, \"measureNum\": 1, \"responses\": 1}"})
 
-
-    with open(file_name, 'r') as f:
-    # Load the JSON data
-        data = json.load(f)
-        # measure = {key: data[key] for key in sorted_keys}
-        # Sort the JSON data by 'measureNum' in ascending order
-        sorted_data = sorted(data, key=lambda x: x['measureNum'])
-
-        # Create a dictionary to store the sorted data
-        sorted_dict = {}
-
-        # Iterate through the sorted data and populate the dictionary
-        for item in sorted_data:
-            measure_num = item['measureNum']
-            responses = item['responses']
-            sorted_dict[measure_num] = responses
-
-        # print(sorted_dict)
+    data = response.json()["data"]
+    # print(data)
 
 
 
-        most_common_dict = {}
+    # file_name = 'scripts/test.json'
+    # with open(file_name, 'r') as f:
+    # # Load the JSON data
+    # data = json.load(f)
+    # measure = {key: data[key] for key in sorted_keys}
+    # Sort the JSON data by 'measureNum' in ascending order
+    sorted_data = sorted(data, key=lambda x: x['measureNum'])
 
-        # Iterate through the sorted_dict
-        for measure_num, responses in sorted_dict.items():
-            # Concatenate name and pitch for each response
-            symbol_strings = []
-            for response in responses:
-                symbols = response['symbols']
-                symbol_string = "".join([symbol['name'] + str(symbol.get('pitch', '')) for symbol in symbols])
-                symbol_strings.append(symbol_string)
+    # Create a dictionary to store the sorted data
+    sorted_dict = {}
+
+    # Iterate through the sorted data and populate the dictionary
+    for item in sorted_data:
+        measure_num = item['measureNum']
+        responses = item['responses']
+        sorted_dict[measure_num] = responses
+
+    # print(sorted_dict)
+
+
+
+    most_common_dict = {}
+
+    # Iterate through the sorted_dict
+    for measure_num, responses in sorted_dict.items():
+        # Concatenate name and pitch for each response
+        symbol_strings = []
+        for response in responses:
+            symbols = response['symbols']
+            symbol_string = "".join([symbol['name'] + str(symbol.get('pitch', '')) for symbol in symbols])
+            symbol_strings.append(symbol_string)
+        
+        # Count occurrences of each symbol string
+        counter = collections.Counter(symbol_strings)
+        
+        # Get the most common symbol string
+        most_common_symbol_string = counter.most_common(1)[0][0]
+        
+        # Create a list for the most common symbols
+        most_common_symbols = []
+        visted_symbols = []
+        for response in responses:
+            symbols = response['symbols']
+            symbol_string = "".join([symbol['name'] + str(symbol.get('pitch', '')) for symbol in symbols])
+            if symbol_string == most_common_symbol_string and symbol_string not in visted_symbols:
+                most_common_symbols.extend(symbols)
+                visted_symbols.append(symbol_string)
+        
+        # Add the most common symbols to the most_common_dict
+        most_common_dict[measure_num] = most_common_symbols
+        # print(most_common_symbols)
+
+    print(most_common_dict)
+
+    sheet = header
+
+    # Iterate through the most_common_dict
+    for measure_num, symbols in most_common_dict.items():
+        print("Measure ID:", measure_num)
+        # Iterate through the symbols list for each measure ID
+        seg = "    "
+        for symbol in symbols:
+            symbol_name = symbol['name']
+            print("Symbol Name:", symbol['name'])
+            print("Symbol Pitch:", symbol.get('pitch', None))
+
+            exp = ""
+            if (symbol_name.split('_')[1] == "note"):
+                exp = pitch_map[symbol['pitch']] + name_map[symbol_name]
+            else:
+                exp = name_map[symbol_name]
             
-            # Count occurrences of each symbol string
-            counter = collections.Counter(symbol_strings)
-            
-            # Get the most common symbol string
-            most_common_symbol_string = counter.most_common(1)[0][0]
-            
-            # Create a list for the most common symbols
-            most_common_symbols = []
-            visted_symbols = []
-            for response in responses:
-                symbols = response['symbols']
-                symbol_string = "".join([symbol['name'] + str(symbol.get('pitch', '')) for symbol in symbols])
-                if symbol_string == most_common_symbol_string and symbol_string not in visted_symbols:
-                    most_common_symbols.extend(symbols)
-                    visted_symbols.append(symbol_string)
-            
-            # Add the most common symbols to the most_common_dict
-            most_common_dict[measure_num] = most_common_symbols
-            # print(most_common_symbols)
+            seg = seg + exp + " "
 
-        print(most_common_dict)
+        sheet = sheet + seg + "\n"
 
-        sheet = header
+    sheet += footer
 
-        # Iterate through the most_common_dict
-        for measure_num, symbols in most_common_dict.items():
-            print("Measure ID:", measure_num)
-            # Iterate through the symbols list for each measure ID
-            seg = "    "
-            for symbol in symbols:
-                symbol_name = symbol['name']
-                print("Symbol Name:", symbol['name'])
-                print("Symbol Pitch:", symbol.get('pitch', None))
-
-                exp = ""
-                if (symbol_name.split('_')[1] == "note"):
-                    exp = pitch_map[symbol['pitch']] + name_map[symbol_name]
-                else:
-                    exp = name_map[symbol_name]
-                
-                seg = seg + exp + " "
-
-            sheet = sheet + seg + "\n"
-
-        sheet += footer
-
-        print(sheet)
+    print(sheet)
         
 
 
