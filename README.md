@@ -1,6 +1,8 @@
-# cs565-backend (under construction)
+# Obbligato-backend
 
-Backend for our crowdsourced optical music recognition project (name pending).
+Backend for our crowdsourced optical music recognition system, Obbligato. For more details on Obbligato itself, [check out the sister frontend repository.](https://github.com/CS-565-SP-2023/Obbligato). Obbligato's backend is written in TypeScript, using Node.js, Express, and Mongoose to create a RESTful API to store and retrieve information in a MongoDB database.
+
+Created by Runyao Fan, Mohit Gupta, Naman Jain, Chris Kull, Weili Li and Yutao Zhou from the University of Illinois Urbana-Champaign.
 
 ## Contents
 
@@ -216,11 +218,11 @@ v18.15.0
 0.39.3
 ```
 
-[Following these instructions.](https://blog.logrocket.com/how-to-set-up-node-typescript-express/)
+<!-- [Following these instructions.](https://blog.logrocket.com/how-to-set-up-node-typescript-express/) -->
 
 Install all node packages:
 ```bash
-npm ci
+npm install
 ```
 
 Create a `.env` file at the root project directory with the following contents (note that it is in the `.gitignore` and will be used to store secrets for development):
