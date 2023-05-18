@@ -1,6 +1,6 @@
 # Obbligato-backend
 
-Backend for our crowdsourced optical music recognition system, Obbligato. For more details on Obbligato itself, [check out the sister frontend repository.](https://github.com/CS-565-SP-2023/Obbligato). Obbligato's backend is written in TypeScript, using Node.js, Express, and Mongoose to create a RESTful API to store and retrieve information in a MongoDB database.
+Backend for our crowdsourced optical music recognition system, Obbligato. Also includes task data, user responses, and some analysis. For more details on Obbligato itself, [check out the sister frontend repository](https://github.com/CS-565-SP-2023/Obbligato). Obbligato's backend is written in TypeScript, using Node.js, Express, and Mongoose to create a RESTful API to store and retrieve information in a MongoDB database.
 
 Created by Runyao Fan, Mohit Gupta, Naman Jain, Chris Kull, Weili Li and Yutao Zhou from the University of Illinois Urbana-Champaign.
 
