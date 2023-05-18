@@ -15,9 +15,9 @@ parser.add_argument("name", help="name of the sheet in the database")
 args = parser.parse_args()
 
 with open(f"{args.sheet_folder_path}/sheet.png", "rb") as image_file:
-    encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+    encoded_image = base64.b64encode(image_file.read())
 
-response = requests.post(f"{ENDPOINT}/api/sheets", json={ "name": args.name, "image": encoded_image })
+response = requests.post(f"{ENDPOINT}/api/sheets", json={ "name": args.name, "image": str(encoded_image) })
 data = response.json()["data"]
 
 if (response.status_code == 201):

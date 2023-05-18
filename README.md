@@ -1,15 +1,26 @@
 # Obbligato-backend
 
-Backend for our crowdsourced optical music recognition system, Obbligato. For more details on Obbligato itself, [check out the sister frontend repository.](https://github.com/CS-565-SP-2023/Obbligato). Obbligato's backend is written in TypeScript, using Node.js, Express, and Mongoose to create a RESTful API to store and retrieve information in a MongoDB database.
+Backend for our crowdsourced optical music recognition system, Obbligato. Also includes task data, user responses, and some analysis. For more details on Obbligato itself, [check out the sister frontend repository](https://github.com/CS-565-SP-2023/Obbligato). Obbligato's backend is written in TypeScript, using Node.js, Express, and Mongoose to create a RESTful API to store and retrieve information in a MongoDB database.
 
 Created by Runyao Fan, Mohit Gupta, Naman Jain, Chris Kull, Weili Li and Yutao Zhou from the University of Illinois Urbana-Champaign.
 
 ## Contents
 
+- [Datasets and Analysis](#datasets-and-analysis)
 - [API Documentation](#api-documentation)
 - [API Usage for Frontend](#api-usage-for-frontend)
 - [Development Environment Setup](#development-environment-setup)
 - [Running the Server](#running-the-server)
+
+## Datasets and Analysis
+
+Two datasets are included in this repository, along with analysis of the results.
+
+In `test_data`, you will find the 3 test sheets we used for the study each with 16 measures (for a total of 48 "task" measures). These were created by the project group, and they make a few assumptions. Everything is in treble clef, C major, 4/4 time signature, no accidentals, and no ledger lines. The only valid musical symbols are quarter note, half note, whole note, quarter rest, half rest, and whole rest. The original photo of each music sheet, the individually segmented out measures, and the gold answers are provided.
+
+In `backups`, you will find the state of the MongoDB database as of 1:30pm 2023-05-07. In addition to the sheets/measures information, this also includes registered users and responses to measure tasks. Data was collected from 2023-05-04 to 2023-05-07, and is stored in JSON format. To keep file sizes reasonable, the raw binary image data is omitted. For privacy reasons, provided emails in the users dataset have been redacted. To allow for analysis on a per user level, though, emails were anonymized in such a way that map one-to-one to original emails. This means that if a user appeared twice in the original dataset (perhaps from two different sessions on the system), that is maintained.
+
+In `analysis`, you will find a Jupyter notebook used to calculate a variety of statistics and results from the study. To run, make sure you set up the Python 3 environment (see further below).
 
 ## API Documentation
 
